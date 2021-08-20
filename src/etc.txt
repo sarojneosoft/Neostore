@@ -1,0 +1,7 @@
+12 - AUG - 21
+Tasks done :
+(NeoSTORE)
+-> Added forget password api
+-> completed the product module
+-> implement on mouse hover zoom feature
+-> designed the cart module
