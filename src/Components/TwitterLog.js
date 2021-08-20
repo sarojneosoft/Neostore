@@ -24,11 +24,7 @@ export default function TwitterLog() {
   onSuccess={onSuccess}
   requestTokenUrl="http://localhost:3000/api/v1/auth/twitter/reverse"
 />
-            {/* <TwitterLogin
-      authCallback={authHandler}
-      consumerKey={"dG9deYkGqIdTmxxma1KIalRd9"}
-      consumerSecret={"XmXjfAdsMy6UseCmstbHt5VweFpw5614AHk4w1OCmmYSGpAmrc"}
-    /> */}
+        
         </div>
     )
 }

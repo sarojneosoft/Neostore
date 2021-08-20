@@ -12,7 +12,7 @@ export default function FacebookLog() {
     return (
         <div>
             <FacebookLogin
-    appId="564682381646211"
+    appId="facebok app id"
     autoLoad={true}
     fields="name,email,picture"
     buttonStyle = {{width : "67%", borderRadius : "10px", fontSize : "19px",  textTransform: "lowercase", padding : "13px"}}

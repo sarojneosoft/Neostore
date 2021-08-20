@@ -9,7 +9,7 @@ export default function GoogleLog() {
   return (
     <div>
     <GoogleLogin
-      clientId="1004088237981-3uogno1lpvvhqin4u079thna2eaq5549.apps.googleusercontent.com"
+      clientId="your google api key"
       render={renderProps => (
         <button onClick={renderProps.onClick} disabled={renderProps.disabled}
         style={{width : "68%", height : "8vh", border : "1px solid black", borderRadius : "10px", marginLeft : "2%"}}
