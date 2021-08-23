@@ -7,15 +7,16 @@ export default function GoogleLog() {
   };
 
   return (
-    <div>
+    <div >
     <GoogleLogin
+
       clientId="your google api key"
       render={renderProps => (
-        <button onClick={renderProps.onClick} disabled={renderProps.disabled}
+        <button  onClick={renderProps.onClick} disabled={renderProps.disabled}
         style={{width : "68%", height : "8vh", border : "1px solid black", borderRadius : "10px", marginLeft : "2%"}}
         >
           <img src="https://e7.pngegg.com/pngimages/299/774/png-clipart-google-logo-google-search-search-engine-optimization-google-s-google-google-logo-google.png" width="10%"/>
-          <span style={{fontSize :"20px"}}>Sign in with google</span>
+          <span style={{fontSize :"20px", color : "#000"}} >Sign in with google</span>
         </button>
       )}
       buttonText="Login With Google"

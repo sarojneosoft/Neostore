@@ -19,7 +19,7 @@
   font-size: 2.2em;
 }
 .cart-wrapper{
-  padding: 0.5% 2%;
+  padding: 0.5% 1%;
   background-color: black;
 }
 .footer-wrapper{
@@ -225,4 +225,37 @@ margin-left: -55%;
 #checkpass{
   height: 20px;
   width: 20px;
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+.react-autosuggest__input {
+  font-size: 16px;
+  padding: 6px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 115%;
+}
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #1B98F5;
+}
+.react-autosuggest__suggestions-container--open {
+  margin-top: 5px;
+  width: 260px;
+  border: 1px solid crimson;
+  background-color: #242B2E;
+  font-weight: 300;
+  font-size: 16px;
+  z-index: 2;
 }

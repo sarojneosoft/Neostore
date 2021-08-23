@@ -17,6 +17,7 @@ import HomeCard from "./HomeCard";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { SearchContext } from "../context/DetailContext";
+import { SEARCH_PRO } from "../context/action.type";
 
 export default function AllProduct(props) {
   const {search, searchDispatch} = useContext(SearchContext);
@@ -51,21 +52,29 @@ export default function AllProduct(props) {
       setLoadcategory("");
       setLoadsort("");
       setLoadOrder("");
+      searchDispatch({
+        type : SEARCH_PRO,
+        payload : ""
+      })
     // putProducts(1);
   };
 
   const onSearch = ()=>{
-    if(search === "table")
-    setLoadcategory("6065c425f45ada6429eb42c9")
-    else if(search === "sofa")
-     setLoadcategory("6065c3a524fe1963df4f2d16")
-    else if(search === "bed")
-        setLoadcategory("6065c425f45ada6429eb42c7")
-    else if(search === "cupboard") 
-        setLoadcategory("6065c425f45ada6429eb42c7") 
+    // if(search === "table")
+    // setLoadcategory("6065c425f45ada6429eb42c9")
+    // else if(search === "sofa")
+    //  setLoadcategory("6065c3a524fe1963df4f2d16")
+    // else if(search === "bed")
+    //     setLoadcategory("6065c425f45ada6429eb42c7")
+    // else if(search === "cupboard") 
+    //     setLoadcategory("6065c425f45ada6429eb42c7") 
   }
 
   const onCategoryChange = async(e) => {
+    searchDispatch({
+      type : SEARCH_PRO,
+      payload : ""
+    })
     // setIsAll(false)
     let category = e.target.value;
     if(category === "table")
@@ -75,7 +84,10 @@ export default function AllProduct(props) {
     else if(category === "bed")
         setLoadcategory("6065c425f45ada6429eb42c7")
     else if(category === "cupboard") 
-        setLoadcategory("6065c425f45ada6429eb42c7")   
+        setLoadcategory("6065c425f45ada6429eb42c7")
+    else if(category == "remove")
+        setLoadcategory("")    
+             
   };
   const onColorChange = (e) => {
     // setIsAll(false)
@@ -86,6 +98,8 @@ export default function AllProduct(props) {
         setLoadcolor("6065ca24cec0196a6fe56e3d")
     else if(color === "blue")
         setLoadcolor("6065ca1bcec0196a6fe56e3b")
+    else if(color === "remove")
+        setLoadcolor("")     
   };
   const onSortChange = (e) => {
     // setIsAll(false)
@@ -100,8 +114,12 @@ export default function AllProduct(props) {
       setLoadsort("price");
       setLoadOrder("asc");
     }else if(sortVal === "price high"){
-      setLoadsort("rating");
+      setLoadsort("price");
       setLoadOrder("desc");
+    }
+    else if(sortVal === "remove"){
+      setLoadsort("");
+      setLoadOrder("");
     }
   };
 
@@ -113,7 +131,12 @@ export default function AllProduct(props) {
   const loadProducts = async () => {
     setLoading(true)
     try {
-       let url = `https://neostore-api.herokuapp.com/api/product?page=${page}&limit=6`
+      let url = "";
+       if(search)
+          url = `https://neostore-api.herokuapp.com/api/product?&limit=19`
+       else
+           url = `https://neostore-api.herokuapp.com/api/product?page=${page}&limit=6`
+
       // let url = `https://neostore-api.herokuapp.com/api/product?category=${loadcategory}&color=${loadcolor}&sortby=${loadsort}&orderby=${loadOrder}&page=${page}&limit=6`
         if(loadcolor !== ""){
           url = url + `&color=${loadcolor}`;
@@ -135,9 +158,20 @@ export default function AllProduct(props) {
       );
       setLoading(false)
       console.log("RESPONSE", res.data.data.docs);
+      let response = res.data.data.docs;
+      console.log(search);
+      if(search){
+        
+       response = response.filter((res) => (" "+res.name.toLowerCase()+" ").includes(" "+search.toLowerCase()+" "));
+       setPages(1);
+       setAllproducts(response);
+      }
+      else{
+      //  console.log("LTS",response[0].name);
       setPages(res.data.data.pages);
-      setAllproducts(res.data.data.docs);
+      setAllproducts(response);
       putProducts(1);
+    }
     } catch (error) {
       console.log("ERROR", error);
       alert("unable to fetch products!!");
@@ -147,7 +181,7 @@ export default function AllProduct(props) {
   useEffect(() => {
     loadProducts();
     
-  }, [page, loadcolor, loadcategory, loadsort, loadOrder ,isAll]);
+  }, [page, loadcolor, loadcategory, loadsort, loadOrder ,isAll, search]);
 
   useEffect(()=>{
     onSearch();
@@ -187,6 +221,12 @@ export default function AllProduct(props) {
                 <DropdownItem value="sofa">sofa</DropdownItem>
                 <DropdownItem value="bed">bed</DropdownItem>
                 <DropdownItem value="cupboard">cupboard</DropdownItem>
+                {
+                  loadcategory ? (
+                    <DropdownItem value="remove" style={{backgroundColor : "crimson", color : "white"}}>remove filter</DropdownItem>
+                  ) : ("")
+                }
+               
               </DropdownMenu>
             </ButtonDropdown>
             <br />
@@ -207,6 +247,11 @@ export default function AllProduct(props) {
                 <DropdownItem value="red">red</DropdownItem>
                 <DropdownItem value="yellow">yellow</DropdownItem>
                 <DropdownItem value="blue">blue</DropdownItem>
+                {
+                  loadcolor ? (
+                    <DropdownItem value="remove" style={{backgroundColor : "crimson", color : "white"}}>remove filter</DropdownItem>
+                  ) : ("")
+                }
               </DropdownMenu>
             </ButtonDropdown>
             <br />
@@ -227,6 +272,11 @@ export default function AllProduct(props) {
                 <DropdownItem value="ratings high">ratings high</DropdownItem>
                 <DropdownItem value="price low">price low</DropdownItem>
                 <DropdownItem value="price high">price high</DropdownItem>
+                {
+                  loadsort ? (
+                    <DropdownItem value="remove" style={{backgroundColor : "crimson", color : "white"}}>remove filter</DropdownItem>
+                  ) : ("")
+                }
               </DropdownMenu>
             </ButtonDropdown>
            
@@ -246,21 +296,38 @@ export default function AllProduct(props) {
         <div class="spinner-border text-danger" style={{width:"2.2em", height:"2.2em"}} role="status">
         </div>
         <span style={{backgroundColor : "transparent", fontSize:"20px"}}>Loading.....</span>
-      </div>: ""
-      }
-            <Pagination
-              size = "large"
-              count={pagesPag}
-              color="primary"
-              showFirstButton={true}
-              showLastButton={true}
-              //   defaultPage={page}
-              onChange={(event, value) => {
-                setPage(value);
-                putProducts(value);
-              }}
-              className="mt-4"
+      </div>: (
+        allproducts.length === 0 ? (
+          <div>
+            <span className="display-5" style={{marginLeft : "20%"}}>Sorry! product not available!</span>
+            <img src="https://thumbs.dreamstime.com/b/house-not-available-white-background-sign-label-flat-style-201430826.jpg" 
+            width = "50%"
+            style={{marginLeft : "30%"}}
+            
             />
+          </div>
+         ) : (
+          <Pagination
+          size = "large"
+          count={pagesPag}
+          color="primary"
+          showFirstButton={true}
+          showLastButton={true}
+          //   defaultPage={page}
+          onChange={(event, value) => {
+            setPage(value);
+            putProducts(value);
+          }}
+          className="mt-4"
+          style={{marginLeft : "30%", marginRight : "30%", width : "100%"}}
+        />
+         )
+      )
+      }
+
+   
+
+            
           </Col>
         </Row>
       </Container>

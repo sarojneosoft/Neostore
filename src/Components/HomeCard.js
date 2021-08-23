@@ -32,6 +32,9 @@ export default function HomeCard(props) {
   const [isClikced, setIsClikced] = useState(false);
 
   let cardImage = props.data.mainImage;
+  console.log(cardImage);
+  if(!cardImage)
+    cardImage = "https://media.architecturaldigest.com/photos/5f4e9c54072307c75638c0f1/1:1/w_1280%2Cc_limit/Screen%252520Shot%2525202020-09-01%252520at%2525203.08.43%252520PM.png";
   let cardTitle = props.data.name;
   let cardPrice = props.data.price;
   let cardRating = props.data.avgRating;
@@ -124,13 +127,14 @@ export default function HomeCard(props) {
   return (
      
     <div>
-          <Card className="cardhover">
+          <Card className="cardhover rounded" >
           <CardImg
             onClick={sendToProductDetails}
             top
             width="100%"
             src={cardImage}
             alt="product image"
+            style={{height : "60vh"}}
           />
            {
         loading ? <div class="d-flex justify-content-center">
@@ -140,7 +144,7 @@ export default function HomeCard(props) {
       </div>: ""
       }
           <CardBody>
-            <CardTitle tag="h5" onClick={sendToProductDetails}>{cardTitle}</CardTitle>
+            <CardTitle style={{height : "10vh"}} tag="h5" onClick={sendToProductDetails}>{cardTitle}</CardTitle>
             <CardText>Rs. {cardPrice} /-</CardText>
             <Button color="danger" className="mb-4" onClick={addProductToCart}>Add To Cart</Button>
             <Box component="fieldset" mb={3} borderColor="transparent" >

@@ -61,12 +61,12 @@ export default function Home() {
         </div>
       ) : (
         <Row className="mt-4">
-          <Carousal data={products} />
+          <Carousal />
         </Row>
       )}
 
       <Row>
-        <NavLink to="/allproducts" exact className="text-center mb-2">
+        <NavLink to="/allproducts" exact style={{textDecoration : "none"}} className="text-center mb-2">
           <span className=" bg-dark text-white" style={{ fontSize: "25px" }}>
             Check All Products
           </span>
@@ -88,7 +88,7 @@ export default function Home() {
         <h5 className="text-center">Popular Products</h5>
         <Row>
           {products.map((prod, index) => (
-            <Col md={4} key={index}>
+            <Col md={4} key={index} style={{marginTop : "10px"}}>
               <HomeCard data={prod} />
             </Col>
           ))}
