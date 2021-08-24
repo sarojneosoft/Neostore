@@ -83,7 +83,7 @@ export default function Cart() {
       toast.error("please add some product to cart!")
 
     } else {
-      history.push("/address");
+      history.push("/selectaddress");
     }
   };
 
@@ -203,13 +203,13 @@ export default function Cart() {
                   Review Order
                 </CardTitle>
                 <CardHeader className="mt-4 bg-primary text-white">
-                  Subtotal<span className="price">{subtotal}/-</span>
+                  Subtotal<span className="price">{subtotal} Rs.</span>
                 </CardHeader>
                 <CardHeader className="mt-2 bg-primary text-white">
-                  GST(5%)<span className="price">{gst}/-</span>
+                  GST(5%)<span className="price">{gst} Rs.</span>
                 </CardHeader>
                 <CardHeader className="mt-2 bg-primary text-white">
-                  Order Total<span className="price">{grandtotal}/-</span>
+                  Order Total<span className="price">{Math.ceil(grandtotal)} Rs.</span>
                 </CardHeader>
                 <Button
                   color="danger"

@@ -15,6 +15,7 @@ export default function Address() {
 
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [del, setDel] = useState(false)
 
 
     const AddAddress = ()=>{
@@ -49,11 +50,11 @@ export default function Address() {
 
     useEffect(()=>{
         loadAllAddress();
-    },[])
+    },[del])
 
     return (
         <div>
-        <ToastContainer position="top-right" />
+       
 
         <Container>
             <Row>
@@ -75,7 +76,7 @@ export default function Address() {
                            
                                 <Row md={4} key={index} className="mt-2">
                                     <Col md={12}>
-                                        <AddressCard data={address} />
+                                        <AddressCard data={address} method = {setDel} state = {del}/>
                                     </Col>
                                  </Row>
                             ))

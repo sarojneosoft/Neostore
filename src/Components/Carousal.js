@@ -63,7 +63,7 @@ export default function Carousal() {
                  category.map((cate, index)=>(
                     <div key={index}>
                         {cate.imageUrl ? (
-                    <img src={cate.imageUrl} style={{maxHeight : "60vh", }}/>
+                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29mYXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" style={{maxHeight : "60vh", }}/>
 
                         ) : (
                     <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29mYXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" style={{maxHeight : "60vh"}}/>

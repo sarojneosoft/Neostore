@@ -87,7 +87,8 @@ export default function EditAddress(props) {
             try{
                 const callback = await axios(config);
                 alert("address updated")
-                history.push("/profile")
+                props.editFun(false)
+                // history.push("/address")
                 console.log(callback);
             }
             catch(error){

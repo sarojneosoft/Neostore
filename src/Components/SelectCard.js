@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 
 
-export default function AddressCard(props) {
+export default function SelectCard(props) {
 const [isEdit, setIsEdit] = useState(false);
 const {cart, cartDispatch} = useContext(CartContext);
 
@@ -41,44 +41,42 @@ const {cart, cartDispatch} = useContext(CartContext);
        setIsEdit(true);
     }
 
- 
+    const checkout = async()=>{
+      let token  = localStorage.getItem("token");
+      let addressOb = {
+        addressId :  id
+      }
+      var config = {
+          method: 'POST',
+          url: `https://neostore-api.herokuapp.com/api/order/place`,
+          headers : {
+              'Authorization' : `${token}`
+          },
+          data : addressOb
 
-    const deleteAddress = async()=>{
-           
-            let token  = localStorage.getItem("token");
-            var config = {
-                method: 'DELETE',
-                url: `https://neostore-api.herokuapp.com/api/user/address/${id}`,
-                headers : {
-                    'Authorization' : `${token}`
-                }
+        };
+      try{
+          const callback = await axios(config);
+          toast.info("order placed successfully")
+          alert("Order Placed Successfully")
+          cartDispatch({
+            type : FLUSH_OUT
+          })
+          history.push("/order")
+          console.log(callback);
+      }
+      catch(error){
+          console.log("ERROR", error);
+          toast.error("unable to place order")
+          alert("unable to place order");
+      }
+    }
 
-              };
-            try{
-                const callback = await axios(config);
-               toast.success("address deleted successfully")
-                props.method(!props.state);
-                // history.push("/profile")
-                console.log(callback);
-            }
-            catch(error){
-                console.log("ERROR", error);
-                alert("unable to delete address");
-            }
-        
-    }
-    const cancel = ()=>{
-      setIsEdit(false)
-    }
+
 
   return (
     <div>
-         <ToastContainer position="top-center" />
-        {
-            isEdit ? (<><EditAddress data = {addressOb} editFun = {setIsEdit}/>
-              <Button color = "warning"  style={{fontSize : "20px", width : "100%", marginLeft : "15%"}} onClick={cancel}>Cancel</Button></>
-              
-              ) : (
+         <ToastContainer position="bottom-center" />
                 <Card className="bg-dark text-white mt-4">
                 <CardHeader className="m-2 p-2 pro">
                   Address Line : <span style={{float : "right"}}>{addressLine}</span>
@@ -95,12 +93,13 @@ const {cart, cartDispatch} = useContext(CartContext);
                 <CardHeader className="m-2 p-2 pro">
                   Country : <span style={{float : "right"}}>{country}</span>
                 </CardHeader>
-                <Button color = "primary" style={{fontSize : "20px"}} onClick={edit}>Edit</Button>
-                <Button color = "warning" className="mt-2" style={{fontSize : "20px"}} onClick={deleteAddress}>Delete</Button>
-               
+                {
+                localStorage.getItem("cartLength")> 0 ? (
+                <Button color = "success" className="mt-4" style={{fontSize : "20px"}} onClick={checkout}>Check Out With This Address</Button>
+                ) : ("")
+                }
               </Card>
-            )
-        }
+        
     </div>
    
   );

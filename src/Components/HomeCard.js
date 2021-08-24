@@ -127,7 +127,7 @@ export default function HomeCard(props) {
   return (
      
     <div>
-          <Card className="cardhover rounded" >
+          <Card className="cardhover rounded mt-2" >
           <CardImg
             onClick={sendToProductDetails}
             top

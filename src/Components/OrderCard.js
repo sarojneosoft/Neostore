@@ -5,12 +5,9 @@ import {
     CardImg,
     CardText,
     CardBody,
-    CardTitle,
-    CardSubtitle,
     CardHeader,
     Button,
   } from "reactstrap";
-import Document from './Document';
 
 export default function OrderCard(props) {
     let image = props.data.productId.mainImage;

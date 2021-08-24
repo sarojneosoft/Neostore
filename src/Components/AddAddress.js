@@ -82,7 +82,7 @@ export default function AddAddress() {
                 console.log(callback.data);
                 toast.success("address added successfully")
                 alert("address added successfully");
-                history.push("/address");
+                history.goBack();
                 
             }
             catch(error){
@@ -185,9 +185,11 @@ export default function AddAddress() {
         >
           Add Address
         </button>
-        <NavLink to="/address" exact style={{textDecoration : "none"}}>
-                    <span className="p-2 m-4 bg-danger text-white rounded" style={{fontSize : "20px"}}>Cancel</span>
-                    </NavLink>  
+                    <span 
+                   
+                    onClick = {()=>history.goBack()}
+                    className="p-2 m-4 bg-danger text-white rounded bt" style={{fontSize : "20px"}}>Cancel</span>
+                    
        
       </form>
                 </Col>

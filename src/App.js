@@ -22,7 +22,6 @@ import Cart from './Components/Cart';
 import Test from './Components/Test';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
-import Checkout_Side from './Components/Checkout_Side';
 import Order from './Components/Order';
 import Profile from './Components/Profile';
 import Address from './Components/Address';
@@ -31,6 +30,8 @@ import AddAddress from './Components/AddAddress';
 import PrivateRoute from './Components/PrivateRoute';
 import Document from './Components/Document';
 import Error from './Components/Error';
+import SelectAddress from './Components/SelectAddress';
+
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Route exact path="/locate" component={LocateStore}/>
           <Route exact path="/forgetmiddle" component={ForgetMiddle}/>
           <Route exact path="/forget" component={Forget}/>
+          
           <Route exact path="/allproducts" component={AllProduct}/>
           <Route exact path="/productdetails" component={ProductDetails}/>
           <PrivateRoute path="/changepassword" exact component={ChangePassword}/>
@@ -64,6 +66,7 @@ function App() {
           <PrivateRoute path="/order" exact component={Order}/>
           <PrivateRoute path="/profile" exact component={Profile}/>
           <PrivateRoute path="/address" exact component={Address}/>
+          <PrivateRoute path="/selectaddress" exact component={SelectAddress}/>
           <PrivateRoute path="/editaddress" exact component={EditAddress}/>
           <PrivateRoute path="/addaddress" exact component={AddAddress}/>
           <PrivateRoute path="/document" exact component={Document}/>

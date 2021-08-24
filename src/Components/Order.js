@@ -3,10 +3,7 @@ import Checkout_Side from './Checkout_Side'
 import axios from 'axios';
 import {Container, Row, Col} from 'reactstrap';
 import OrderCard from './OrderCard';
-import { useHistory, Redirect } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from './Footer';
-
+import { useHistory} from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 

@@ -83,6 +83,7 @@ export default function Navbar(props) {
         console.log("WWW", res);
         console.log("CARTRES", res.data.data.products.length);
         setOriginalCart(res.data.data.products.length);
+        localStorage.setItem("cartLength", res.data.data.products.length);
       })
       .catch((err) => console.log(err));
     setLoading(false);
@@ -144,6 +145,7 @@ export default function Navbar(props) {
       localStorage.removeItem("lname");
       localStorage.removeItem("gender");
       localStorage.removeItem("mobile");
+      localStorage.removeItem("cartLength");
       history.push("/login");
     }
   };
@@ -288,63 +290,79 @@ export default function Navbar(props) {
               <span >Cart</span>
             </div>
             </div>
-            <div className="col-md-1 mt-2" style={{marginLeft : "30px"}}>
+            <div className="col-md-1 mt-2">
             <div className="user-wrapper">
-              <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} size="md">
+              <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} size="md" >
                 <DropdownToggle caret color="dark">
                   <FaUserAlt />
                   <span className="caret"></span>
                 </DropdownToggle>
                 <DropdownMenu
+                
+                right
                   onClick={onMenuChange}
                   style={{
                     backgroundColor: "#03203C",
-                    color: "#fff",
                     fontSize: "20px",
                     padding: "5px",
                   }}
                 >
-                  <DropdownItem value="profile">
-                    <NavLink
+                  <NavLink
                       to="/profile"
                       exact
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none"}}
                     >
-                      Profile
-                    </NavLink>
+                  <DropdownItem value="profile" className="drop">
+                    
+                      <span style={{color : "#fff"}} >Profile</span>
+                    
                   </DropdownItem>
-                  <DropdownItem value="address">
-                    <NavLink
+                  </NavLink>
+
+                  <NavLink
                       to="/address"
                       exact
                       style={{ textDecoration: "none" }}
                     >
-                      Address
-                    </NavLink>
+                  <DropdownItem value="address" className="drop">
+
+                  <span style={{color : "#fff"}}>Address</span>
+                    
+                   
                   </DropdownItem>
-                  <DropdownItem value="cart">
-                    <NavLink
+                  </NavLink>
+
+                  <NavLink
                       to="/cart"
                       exact
                       style={{ textDecoration: "none" }}
                     >
-                      Cart
-                    </NavLink>
-                  </DropdownItem>
+                  <DropdownItem value="cart" className="drop">
+                   
+                  <span style={{color : "#fff"}}>Cart</span>
+
+                   
+                  </DropdownItem >
+
+                  </NavLink>
                   {localStorage.getItem("token") ? (
-                    <DropdownItem value="logout" style={{ color: "#EF5354" }}>
-                      Logout
+                    <DropdownItem value="logout" className="drop">
+                   <span style={{color : "#EF5354"}}>Logout</span>
+
                     </DropdownItem>
                   ) : (
-                    <DropdownItem value="login">
-                      <NavLink
-                        to="/login"
-                        exact
-                        style={{ textDecoration: "none" }}
-                      >
-                        Login
-                      </NavLink>
+                    <NavLink
+                    to="/login"
+                    exact
+                    style={{ textDecoration: "none" }}
+                  >
+                    <DropdownItem value="login" className="drop">
+                     
+                    <span style={{color : "#00D84A"}}>Login</span>
+
+                     
                     </DropdownItem>
+                    </NavLink>
                   )}
                 </DropdownMenu>
               </ButtonDropdown>
