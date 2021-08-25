@@ -110,7 +110,7 @@ export default function HomeCard(props) {
              .catch(err => {
                setLoading(false);
                console.log("ERROR", err);
-               alert("unable to add product to cart!")
+               toast.error("product already added to cart!")
              })
 
     

@@ -51,7 +51,10 @@ export default function Navbar(props) {
   const [suggestPros, setSuggestPros] = useState([]);
 
   useEffect(() => {
-    if (isAuthenticated()) callCart();
+    if (isAuthenticated()){
+      console.log("calling callcart");
+      callCart();
+    } 
     else setOriginalCart(cart.length);
   }, [cart, auth]);
 
@@ -130,14 +133,6 @@ export default function Navbar(props) {
     let item = e.target.value;
     if (item === "logout") {
       alert("logging out");
-      cartDispatch({
-        type: FLUSH_OUT,
-      });
-      authDispatch({
-        type: CHANGE_AUTH,
-        payload: false,
-      });
-
       localStorage.removeItem("token");
       localStorage.removeItem("invoiceOb");
       localStorage.removeItem("email");
@@ -146,6 +141,16 @@ export default function Navbar(props) {
       localStorage.removeItem("gender");
       localStorage.removeItem("mobile");
       localStorage.removeItem("cartLength");
+      authDispatch({
+        type: CHANGE_AUTH,
+        payload: false,
+      });
+      cartDispatch({
+        type: FLUSH_OUT,
+      });
+      
+
+      
       history.push("/login");
     }
   };
@@ -333,21 +338,21 @@ export default function Navbar(props) {
                   </NavLink>
 
                   <NavLink
-                      to="/cart"
+                      to="/order"
                       exact
                       style={{ textDecoration: "none" }}
                     >
-                  <DropdownItem value="cart" className="drop">
+                  <DropdownItem value="order" className="drop">
                    
-                  <span style={{color : "#fff"}}>Cart</span>
+                  <span style={{color : "#fff"}}>Order</span>
 
                    
                   </DropdownItem >
 
                   </NavLink>
                   {localStorage.getItem("token") ? (
-                    <DropdownItem value="logout" className="drop">
-                   <span style={{color : "#EF5354"}}>Logout</span>
+                    <DropdownItem value="logout" className="drop text-white" style={{paddingLeft :"26px", }} >
+                      Logout
 
                     </DropdownItem>
                   ) : (

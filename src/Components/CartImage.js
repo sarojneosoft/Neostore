@@ -159,7 +159,7 @@ export default function CartImage(props) {
                 fontSize : "20px",
                 borderRadius : "20px",
                 width : "40%",
-                height : "32vh",
+                height : "34vh",
                 margin : "auto"
             }
         }}

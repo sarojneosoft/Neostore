@@ -249,8 +249,8 @@ export default function Form() {
         >
           Submit
         </button>
-        <p>Already registered?
-        <NavLink to="/login" exact>
+        <p className="text-white">Already registered?
+        <NavLink to="/login" exact style={{textDecoration : "none"}}>
               <span className="m-2 p-1 display-8 text-white bg-dark">sign in here</span>
         </NavLink>
         </p>

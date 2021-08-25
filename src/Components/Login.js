@@ -167,7 +167,7 @@ export default function Login() {
                 <p>
                   <label
                     id="email1"
-                    style={{ marginTop: "50px" }}
+                    style={{ marginTop: "50px", marginLeft : "-50%"}}
                     for="empMail"
                   >
                     Email*
@@ -219,7 +219,7 @@ export default function Login() {
                 </button>
                 <p className="mt-4">
                 <span className="text-white">Don't have an account?</span>
-                  <NavLink to="/register" exact>
+                  <NavLink to="/register" exact style={{textDecoration : "none"}}>
                     <span className="m-2 display-8 bg-dark text-white">
                       Register Now
                     </span>
@@ -227,7 +227,7 @@ export default function Login() {
                 </p>
                 <p className="mt-4">
                   <span className="text-white">Forgot Password?</span>
-                  <NavLink to="/forgetmiddle" exact>
+                  <NavLink to="/forgetmiddle" exact style={{textDecoration : "none"}}>
                     <span className="m-2 display-8 bg-dark text-white">
                       Click Here
                     </span>

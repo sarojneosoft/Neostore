@@ -28,15 +28,15 @@ export default function Profile() {
                      <Checkout_Side/> 
                 </Col>
                 <Col md={5}>
-                     <p className="display-5">Profile</p>
+                     <p className="bg-dark text-white display-6 p-2 rounded mt-2 text-center">Profile Section</p>
                      <Row>
                          <Col>
                             <Card>
-                                <CardHeader className="m-2 p-4 bg-dark text-white pro">First Name : {fname}</CardHeader>
-                                <CardHeader className="m-2 p-4 bg-dark text-white pro">Last Name : {lname}</CardHeader>
-                                <CardHeader className="m-2 p-4 bg-dark text-white pro">Gender : {gender}</CardHeader>
-                                <CardHeader className="m-2 p-4 bg-dark text-white pro">Mobile : {mobile}</CardHeader>
-                                <CardHeader className="m-2 p-4 bg-dark text-white pro">Email : {email}</CardHeader>
+                                <CardHeader className="m-2 p-2 bg-muted text-dark pro">First Name : {fname}</CardHeader>
+                                <CardHeader className="m-2 p-2 bg-muted text-dark pro">Last Name : {lname}</CardHeader>
+                                <CardHeader className="m-2 p-2 bg-muted text-dark pro">Gender : {gender}</CardHeader>
+                                <CardHeader className="m-2 p-2 bg-muted text-dark pro">Mobile : {mobile}</CardHeader>
+                                <CardHeader className="m-2 p-2 bg-muted text-dark pro">Email : {email}</CardHeader>
                             </Card>
                          </Col>
                      </Row>

@@ -4,6 +4,7 @@ import {Container, Row, Col, Button} from 'reactstrap';
 import AddressCard from './AddressCard';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+import { ToastContainer, Toast, toast } from 'react-toastify';
 
 export default function EditAddress(props) {
 
@@ -40,23 +41,35 @@ export default function EditAddress(props) {
    
     const isOkay = () => {
         let res = true;
-        if (addresslineAdd === "" || pinAdd === "" || cityAdd === "" || stateAdd === "" || countryAdd === "") {
-          alert("fields can not be empty!");
+        if (addresslineAdd === ""){
+          toast.error(" addressline field can not be empty!");
+          res = false;
+        }else if(pinAdd === ""){
+          toast.error(" pincode field can not be empty!");
+          res = false;
+        }else if(cityAdd === ""){
+          toast.error(" city field can not be empty!");
+          res = false;
+        }else if(stateAdd === ""){
+          toast.error(" state field can not be empty!");
+          res = false;
+        } else if(countryAdd === "") {
+          toast.error(" country field can not be empty!");
           res = false;
         } else if (pinAdd.length < 6 || pinAdd.length >6 || /^[0-9]{6}$/.test(pinAdd)=== false) {
-          alert("please give a valid pincode");
+          toast.info("please give a valid pincode");
           setPin("");
           res = false;
         }else if(! /^[a-zA-Z ]+$/.test(cityAdd)){
-          alert("please enter a valid city name");
+          toast.info("please enter a valid city name");
           setCity("");
           res = false;
         }else if(! /^[a-zA-Z ]+$/.test(stateAdd)){
-            alert("please enter a valid state name");
+            toast.info("please enter a valid state name");
             setState("");
             res = false;
           }else if(! /^[a-zA-Z ]+$/.test(countryAdd)){
-            alert("please enter a valid country name");
+            toast.info("please enter a valid country name");
             setCountry("");
             res = false;
           }
@@ -86,14 +99,14 @@ export default function EditAddress(props) {
               };
             try{
                 const callback = await axios(config);
-                alert("address updated")
+                toast.success("address updated")
                 props.editFun(false)
                 // history.push("/address")
                 console.log(callback);
             }
             catch(error){
                 console.log("ERROR", error);
-                alert("unable to update address");
+                toast.error("unable to update address");
             }
         }
        
@@ -103,6 +116,7 @@ export default function EditAddress(props) {
 
     return (
         <Container>
+            <ToastContainer position="top-center" />
             <Row>
               
                 <Col md={12}>
@@ -124,7 +138,7 @@ export default function EditAddress(props) {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="pincode">
+          <label id="email1"  for="pincode" style={{marginLeft : "-52%"}}>
              pincode
           </label>
          <input
@@ -139,7 +153,7 @@ export default function EditAddress(props) {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="city">
+          <label id="email1"  for="city" style={{marginLeft : "-57%"}}>
              city
           </label>
          <input
@@ -153,7 +167,7 @@ export default function EditAddress(props) {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="state">
+          <label id="email1"  for="state" style={{marginLeft : "-55%"}}>
              state
           </label>
          <input
@@ -167,7 +181,7 @@ export default function EditAddress(props) {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="country">
+          <label id="email1"  for="country" style={{marginLeft : "-52%"}}>
              country
           </label>
          <input
@@ -186,6 +200,7 @@ export default function EditAddress(props) {
           onClick={saveAddress}
           type="submit"
           className="btn btn-lg btn-primary sub1 mt-4"
+      
         >
           Update Address
         </button>

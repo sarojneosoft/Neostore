@@ -102,8 +102,8 @@ export default function AddAddress() {
                     <Checkout_Side />
                 </Col>
                 <Col md={5}>
-                <p className="display-6 mt-2">Add Address</p>
-                    <form className="text-center forml" style={{height : "80vh"}}>
+                <p className="bg-dark text-white display-6 rounded mt-2 text-center">Add Address</p>
+                    <form className="text-center forml" style={{height : "90vh"}}>
         
         <p className="mt-2" >
           <label id="email1"  for="addressline">
@@ -120,7 +120,7 @@ export default function AddAddress() {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="pincode">
+          <label id="email1"  for="pincode" style={{marginLeft : "-50%"}}>
              pincode
           </label>
          <input
@@ -135,7 +135,7 @@ export default function AddAddress() {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="city">
+          <label id="email1"  for="city" style={{marginLeft : "-55%"}}>
              city
           </label>
          <input
@@ -149,7 +149,7 @@ export default function AddAddress() {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="state">
+          <label id="email1"  for="state" style={{marginLeft : "-52%"}}>
              state
           </label>
          <input
@@ -163,7 +163,7 @@ export default function AddAddress() {
           />
         </p>
         <p style={{marginTop : "-15px"}}>
-          <label id="email1"  for="country">
+          <label id="email1"  for="country" style={{marginLeft : "-50%"}}>
              country
           </label>
          <input
@@ -185,10 +185,16 @@ export default function AddAddress() {
         >
           Add Address
         </button>
-                    <span 
-                   
-                    onClick = {()=>history.goBack()}
-                    className="p-2 m-4 bg-danger text-white rounded bt" style={{fontSize : "20px"}}>Cancel</span>
+        <button
+           onClick = {(e)=> {
+            e.preventDefault() 
+            history.goBack()}}
+          type="submit"
+          className="btn btn-lg btn-warning sub1 mt-2"
+        >
+          Cancel
+        </button>
+                    
                     
        
       </form>

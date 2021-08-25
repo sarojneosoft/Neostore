@@ -11,9 +11,9 @@ export default function Checkout_Side() {
         <Container>
             <Row>
                 <Col>
-                    <p className="display-5">My Account</p>
+                    <p className="bg-dark text-white display-6 p-2 text-center rounded mt-2" style={{width : "50%"}}>My Account</p>
                     <img src="https://avatars3.githubusercontent.com/u/9384699?s=400&v=4" width="30%"/>
-                    <input type="text" readOnly value={fullName} className="form-control mt-4" style={{width : "70%", fontSize : "1.5em"}}/>
+                    <input type="text" readOnly value={fullName} className="form-control mt-4" style={{width : "50%", fontSize : "1.5em"}}/>
                 </Col>
             </Row>
             <Row>

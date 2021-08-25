@@ -76,7 +76,7 @@ const {cart, cartDispatch} = useContext(CartContext);
          <ToastContainer position="top-center" />
         {
             isEdit ? (<><EditAddress data = {addressOb} editFun = {setIsEdit}/>
-              <Button color = "warning"  style={{fontSize : "20px", width : "100%", marginLeft : "15%"}} onClick={cancel}>Cancel</Button></>
+              <Button color = "warning"  style={{fontSize : "20px", width : "100%", marginLeft : "10%"}} onClick={cancel}>Cancel</Button></>
               
               ) : (
                 <Card className="bg-dark text-white mt-4">

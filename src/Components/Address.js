@@ -62,7 +62,7 @@ export default function Address() {
                     <Checkout_Side />
                 </Col>
                 <Col md={5}>
-                    <p className="display-5">Addresses</p>
+                    <p className="bg-dark text-white display-6 rounded mt-2 text-center">Addresses Section</p>
                     <Button color="danger" size="lg" onClick={AddAddress}>Add Address</Button>
                     {
         loading ? <div class="d-flex justify-content-center">
