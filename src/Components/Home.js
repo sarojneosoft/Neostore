@@ -1,18 +1,15 @@
-
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { Redirect, useHistory, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import HomeCard from "./HomeCard";
 import axios from "axios";
 import Carousal from "./Carousal";
-
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 /**
  * @author Saroj Sundara
- * @description 
- * @param 
+ * @description this method puts all together different parts of homescreen like carousal, all products section and popular products section
  * @returns JSX for Home Screen
  */
 
@@ -31,11 +28,9 @@ export default function Home() {
           },
         }
       );
-      console.log("RESULT", result.data.data.docs);
       setProducts(result.data.data.docs);
     } catch (error) {
-      alert("unable to load products");
-      console.log("ERROR", error);
+      toast.error("unable to load products");
     }
     setLoading(false);
   };

@@ -1,17 +1,10 @@
-import React from 'react'
-
-//Importing all the components to make dashboard 
-import Navbar from './Navbar'
-import Home from './Home'
-import Footer from './Footer'
-
+import React from "react";
+import Home from "./Home";
 
 export default function Dashboard() {
-    return (
-        <div>
-           
-            <Home />
-          
-        </div>
-    )
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 }

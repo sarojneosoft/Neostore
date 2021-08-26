@@ -1,25 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Container, Row, Col } from "reactstrap";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
 import CartImage from "./CartImage";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button,
-  CardHeader,
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Button, CardHeader } from "reactstrap";
 import Axios from "axios";
-import { REMOVE_FROM_CART } from "../context/action.type";
 import { CartContext } from "../context/DetailContext";
 import { useHistory } from "react-router-dom";
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * @author Saroj Sundara
+ * @description this function contains several methods for loading all the added products from the cart, calculating total amount and redirecting to the checkout section
+ * @returns JSX for Cart Screen
+ */
 
 export default function Cart() {
   let history = useHistory();
@@ -47,7 +40,6 @@ export default function Cart() {
 
     await Axios(config)
       .then((res) => {
-        console.log("NEWRES", res.data.data.products);
         setProducts(res.data.data.products);
         calculateTotal();
       })
@@ -58,7 +50,6 @@ export default function Cart() {
   const calculateTotal = () => {
     let total = 0;
     products.forEach((prod) => {
-      console.log("tot", prod.totalAmount);
       total = total + Number(prod.totalAmount);
     });
     setSubtotal(total);
@@ -79,39 +70,16 @@ export default function Cart() {
 
   const checkout = () => {
     if (subtotal === 0) {
-      // alert("please add some product to cart!");
-      toast.error("please add some product to cart!")
-
+      toast.error("please add some product to cart!");
     } else {
       history.push("/selectaddress");
     }
   };
 
-  // const deleteProduct = (id)=>{
-  //   let token = localStorage.getItem('token');
-
-  //   let config = {
-  //     method : 'DELETE',
-  //     url : `https://neostore-api.herokuapp.com/api/cart/${id}`,
-  //     headers: {
-  //      'Authorization' : `${token}`
-  //    }
-  //   }
-
-  //    Axios(config).then(res =>{
-  //     cartDispatch({
-  //       type : REMOVE_FROM_CART,
-  //       payload : id
-  //     })
-  //     //  loadAllCartProducts()
-  //   }).catch(err => console.log(err))
-  // }
-
   return (
     <div>
-      {console.log(subtotal)}
       <ToastContainer position="top-center" />
-    
+
       <Container>
         <Row>
           <Col md={8} className="mt-4">
@@ -158,7 +126,6 @@ export default function Cart() {
               </Col>
             </Row>
             <Row>
-             
               {loading ? (
                 <div class="d-flex justify-content-center">
                   <div
@@ -172,25 +139,25 @@ export default function Cart() {
                   >
                     Loading.....
                   </span>
-                
                 </div>
+              ) : products.length === 0 ? (
+                <>
+                  <p className="mt-4 display-5 text-center bg-dark text-white rounded">
+                    Cart is empty
+                  </p>
+
+                  <img
+                    src="https://www.metro-markets.com/plugins/user/images/emptycart.png"
+                    className="cartImage"
+                  />
+                </>
               ) : (
-                products.length === 0 ? (
-                  <>
-                  <p className="mt-4 display-5 text-center bg-dark text-white rounded">Cart is empty</p>
-                  
-                  <img src="https://www.metro-markets.com/plugins/user/images/emptycart.png" className="cartImage" />
-                  </>
-                ) : (
-                  products.map((prod, index) => (
-                    <Col md={12} key={index} className="mt-4">
-                      <CartImage data={prod} />
-                    </Col>
-                  )
-                )
-               )
+                products.map((prod, index) => (
+                  <Col md={12} key={index} className="mt-4">
+                    <CartImage data={prod} />
+                  </Col>
+                ))
               )}
-           
             </Row>
           </Col>
           <Col md={4}>
@@ -209,7 +176,8 @@ export default function Cart() {
                   GST(5%)<span className="price">{gst} Rs.</span>
                 </CardHeader>
                 <CardHeader className="mt-2 bg-primary text-white">
-                  Order Total<span className="price">{Math.ceil(grandtotal)} Rs.</span>
+                  Order Total
+                  <span className="price">{Math.ceil(grandtotal)} Rs.</span>
                 </CardHeader>
                 <Button
                   color="danger"
@@ -225,7 +193,6 @@ export default function Cart() {
           </Col>
         </Row>
       </Container>
-     
     </div>
   );
 }

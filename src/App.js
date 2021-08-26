@@ -1,6 +1,9 @@
 import React, {useReducer} from 'react';
+import { BrowserRouter as Router, Route , Switch} from 'react-router-dom'
+
 import {DetailContext, CartContext, SearchContext, AuthContext} from './context/DetailContext'
 import {detailReducer, cartReducer, searchReducer, authReducer} from './context/reducer';
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
@@ -9,9 +12,6 @@ import './App.css';
 import LocateStore from './Components/Locate';
 import Dashboard from './Components/Dashboard';
 import Login from './Components/Login';
-
-//Routing
-import { BrowserRouter as Router, Route , Switch} from 'react-router-dom'
 import Register from './Components/Register';
 import Forget from './Components/Forget';
 import ForgetMiddle from './Components/ForgetMiddle';
@@ -19,7 +19,6 @@ import AllProduct from './Components/AllProduct';
 import ProductDetails from './Components/ProductDetails';
 import ChangePassword from './Components/ChangePassword';
 import Cart from './Components/Cart';
-import Test from './Components/Test';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Order from './Components/Order';
@@ -36,6 +35,7 @@ import SelectAddress from './Components/SelectAddress';
 
 function App() {
    
+  //All the reducers
   const [details, dispatch] = useReducer(detailReducer, [])
   const [cart, cartDispatch] = useReducer(cartReducer, [])
   const [search, searchDispatch] = useReducer(searchReducer, "")
@@ -56,13 +56,11 @@ function App() {
           <Route exact path="/register" component={Register}/>
           <Route exact path="/locate" component={LocateStore}/>
           <Route exact path="/forgetmiddle" component={ForgetMiddle}/>
-          <Route exact path="/forget" component={Forget}/>
-          
+          <Route exact path="/forget" component={Forget}/>    
           <Route exact path="/allproducts" component={AllProduct}/>
           <Route exact path="/productdetails" component={ProductDetails}/>
           <PrivateRoute path="/changepassword" exact component={ChangePassword}/>
           <PrivateRoute path="/cart" exact component={Cart}/>
-          {/* <Route exact path="/side" component={Checkout_Side}/>  */}
           <PrivateRoute path="/order" exact component={Order}/>
           <PrivateRoute path="/profile" exact component={Profile}/>
           <PrivateRoute path="/address" exact component={Address}/>

@@ -1,109 +1,94 @@
-import React,{useState, useEffect} from 'react'
-import  Navbar  from './Navbar'
-import Footer from './Footer'
+import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
+
+/**
+ * @author Saroj Sundara
+ * @description this method is responsible for taking the user email and sending the verification code to the user
+ * @returns JSX for Forget Password Screen
+ */
 
 export default function Forget() {
-   
-    const history = useHistory()
+  const history = useHistory();
 
-    const [code, setCode] = useState("");
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("");
-    const [confirm, setConfirm] = useState("");
-    const [loading, setLoading] = useState(false)
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const onEmailChange = (event) => {
-      setEmail(event.target.value);
-    };
-  
-    const onCodeChange = (event) => {
-      setCode(event.target.value);
-    };
-    const onPasswordChange = (event) => {
-      setPassword(event.target.value);
-    };
-    const onConfirmChange = (event) => {
-        setConfirm(event.target.value);
+  const onCodeChange = (event) => {
+    setCode(event.target.value);
+  };
+  const onPasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const onConfirmChange = (event) => {
+    setConfirm(event.target.value);
+  };
+
+  let recoverOb = {
+    token: code,
+    password: password,
+    repeatPassword: confirm,
+  };
+
+  const isOkay = () => {
+    let res = true;
+    if (code === "") {
+      toast.error("code field can not be empty!");
+      res = false;
+    } else if (password === "") {
+      toast.error("password field can not be empty!");
+      res = false;
+    } else if (confirm === "") {
+      toast.error("confirm password field can not be empty!");
+      res = false;
+    } else if (password.length < 8) {
+      toast.error("Password lenght should be more than 8 characters");
+      setPassword("");
+      res = false;
+    } else if (password !== confirm) {
+      toast.error("password mismatch!");
+      setConfirm("");
+      res = false;
+    }
+
+    return res;
+  };
+
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    if (isOkay()) {
+      let config = {
+        method: "post",
+        url: "https://neostore-api.herokuapp.com/api/auth/set-password",
+        data: recoverOb,
       };
-
-      let recoverOb = {
-        token : code,
-        password : password,
-        repeatPassword:confirm
-      } 
-     
-    const isOkay = ()=>{
-      let res = true;
-      if (code === "" || password === "" || confirm === "") {
-        alert("fields can not be empty!");
-        res = false;
-      }else if(password.length < 8){
-        alert("Password lenght should be more than 8 characters")
-        setPassword("");
-        res = false;
-    }else if(password !== confirm){
-        alert("password mismatch!");
-        setConfirm("");
-        res = false;
-     } 
-
-     return res;
-    }  
-    
-    const onHandleSubmit = (e)=>{
-       e.preventDefault();
-        if(isOkay()){
-          console.log("ok");
-           
-            let config = {
-              method: 'post',
-              url: 'https://neostore-api.herokuapp.com/api/auth/set-password',
-              data : recoverOb
-            }
-            axios(config)
-        .then(res =>{
+      axios(config)
+        .then((res) => {
           setLoading(false);
-          console.log("SUCCESS", res);
-          if(res.status === 200){
-            alert("Password recovered successfully");
+          if (res.status === 200) {
+            toast.error("Password recovered successfully");
             history.push("/login");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setLoading(false);
-          console.log("ERROR", err);
-          alert("unable to recover password!")
-        })
-        }
+          toast.error("unable to recover password!");
+        });
     }
+  };
 
+  return (
+    <div>
+      <ToastContainer position="top-right" />
 
-  //  const isCodeSent = ()=>{
-    
-  //   let config = {
-  //     method: 'post',
-  //     url: 'https://neostore-api.herokuapp.com/forgotPassword',
-  //     headers: { 
-  //       Accept:"application/json",
-  //       'Content-Type': 'application/json', 
-  //     },
-  //     email
-  //   }
-  //  }
-    
-    // useEffect(()=>{
-    //     isCodeSent()
-    // }, [])
-    return (
-        <div>
-         
-             <h1 className="mt-4 text-center display-5">Recover Password</h1>
-             <form className="text-center forml">
+      <h1 className="mt-4 text-center display-5">Recover Password</h1>
+      <form className="text-center forml">
         <p>
-          <label id="email1" style={{marginTop : "50px"}} for="code">
+          <label id="email1" style={{ marginTop: "50px" }} for="code">
             Verification Code*
           </label>
           <input
@@ -116,7 +101,7 @@ export default function Forget() {
           />
         </p>
         <p>
-          <label id="email1"  for="newpassword">
+          <label id="email1" for="newpassword" style={{ marginLeft: "-50%" }}>
             New Password*
           </label>
           <input
@@ -128,8 +113,8 @@ export default function Forget() {
             value={password}
           />
         </p>
-        <p className="profile" style={{marginLeft : "0px"}}>
-        <label id="password1" for="empPassword">
+        <p className="profile" style={{ marginLeft: "0px" }}>
+          <label id="password1" for="empPassword">
             Confirm Password*
           </label>
           <input
@@ -148,9 +133,7 @@ export default function Forget() {
         >
           Submit
         </button>
-       
       </form>
-         
-        </div>
-    )
+    </div>
+  );
 }

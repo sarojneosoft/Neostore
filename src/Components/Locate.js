@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Map } from 'react-store-locator';
 import loc from '../assets/location.png';
 
-export default class Locate extends Component {
-    render() {
+/**
+ * @author Saroj Sundara
+ * @description this method is responsible for login in facebook functionality
+ * @returns JSX for Locate stores screen
+ */
+
+
+export default function Locate() {
         const locations = [
             {
             id: 1,
@@ -32,16 +38,23 @@ export default class Locate extends Component {
             lng: 85.3131,
             show: true,
             name: 'Bihar' //25.0961
+          },
+          {
+            id: 5,
+            lat: 10.8505,
+            lng: 76.2711,
+            show: true,
+            name: 'Kerala' //25.0961
           }
-          ]
+        ]
         return (
-            <div className="map m-4">
+            <div className="map">
                  <Map 
+                   searchMarker={{icon: loc}}
                   initialZoom={5}
-                  searchMarker={{icon: loc}}
                  locations={locations} mapOptions = {{}} googleApiKey={'AIzaSyAnJUJEoB6P_693eFppW5o_c9pFeSi1-7E'}/>
                 
             </div>
         )
     }
-}
+

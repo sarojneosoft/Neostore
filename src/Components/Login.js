@@ -21,6 +21,13 @@ import { isAuthenticated } from "./Auth";
 import { AuthContext } from "../context/DetailContext";
 import { CHANGE_AUTH } from "../context/action.type";
 
+/**
+ * @author Saroj Sundara
+ * @description this method is responsible for logging in a user by email and password
+ * @returns JSX for Login screen
+ */
+
+
 export default function Login() {
   const { auth, authDispatch } = useContext(AuthContext);
 
@@ -58,19 +65,17 @@ export default function Login() {
   //Function for validation
   const isOkay = () => {
     let res = true;
-    if (email === "" ) {
+    if (email === "") {
       toast.error("email field can not be empty!");
       res = false;
-    }
-     else if (!reg.test(String(email).toLowerCase())) {
+    } else if (!reg.test(String(email).toLowerCase())) {
       toast.error("please give a valid email id");
       setEmail("");
       res = false;
-    }else if(password === ""){
+    } else if (password === "") {
       toast.error("password field can not be empty!");
       res = false;
-    } 
-    else if (password.length < 8) {
+    } else if (password.length < 8) {
       toast.error("minimum eight characters required");
       setPassword("");
       res = false;
@@ -120,7 +125,6 @@ export default function Login() {
         history.replace("/dashboard");
       } catch (error) {
         setLoading(false);
-        console.log(error);
         toast("invalid user! check your email or password", { type: "error" });
         setEmail("");
         setPassword("");
@@ -167,7 +171,7 @@ export default function Login() {
                 <p>
                   <label
                     id="email1"
-                    style={{ marginTop: "50px", marginLeft : "-50%"}}
+                    style={{ marginTop: "50px", marginLeft: "-50%" }}
                     for="empMail"
                   >
                     Email*
@@ -195,31 +199,37 @@ export default function Login() {
                     value={password}
                   />
                   <div className="form-check form-switch mt-2">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    onClick={showPass}
-                    id="showpass"
-                    style={{marginLeft : "15%", width : "7%"}}
-                  />
-                  <label className="form-check-label" for="showpass" style={{marginRight : "50%"}}>
-                    Show Password
-                  </label>
-                  
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      onClick={showPass}
+                      id="showpass"
+                      style={{ marginLeft: "15%", width: "7%" }}
+                    />
+                    <label
+                      className="form-check-label"
+                      for="showpass"
+                      style={{ marginRight: "50%" }}
+                    >
+                      Show Password
+                    </label>
                   </div>
                 </p>
-                
 
                 <button
                   onClick={onHandleSubmit}
                   type="submit"
-                  className="btn btn-lg btn-dark sub1 mt-4 " 
+                  className="btn btn-lg btn-dark sub1 mt-4 "
                 >
                   Login
                 </button>
                 <p className="mt-4">
-                <span className="text-white">Don't have an account?</span>
-                  <NavLink to="/register" exact style={{textDecoration : "none"}}>
+                  <span className="text-white">Don't have an account?</span>
+                  <NavLink
+                    to="/register"
+                    exact
+                    style={{ textDecoration: "none" }}
+                  >
                     <span className="m-2 display-8 bg-dark text-white">
                       Register Now
                     </span>
@@ -227,7 +237,11 @@ export default function Login() {
                 </p>
                 <p className="mt-4">
                   <span className="text-white">Forgot Password?</span>
-                  <NavLink to="/forgetmiddle" exact style={{textDecoration : "none"}}>
+                  <NavLink
+                    to="/forgetmiddle"
+                    exact
+                    style={{ textDecoration: "none" }}
+                  >
                     <span className="m-2 display-8 bg-dark text-white">
                       Click Here
                     </span>

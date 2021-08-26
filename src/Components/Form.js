@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import FacebookLog from "./FacebookLog";
 import GoogleLog from "./GoogleLog";
-import { Container, Row, Col, Button } from "reactstrap";
-import GoogleLogin from "react-google-login";
-import { NavLink, useHistory } from 'react-router-dom'
+import { Container, Row, Col } from "reactstrap";
+import { NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
+/**
+ * @author Saroj Sundara
+ * @description this method is responsible for registering user by accepting information like firstname, lastname, email, password, mobile no, gender
+ * @returns JSX for Registration Screen
+ */
 
 export default function Form() {
-   
   const history = useHistory();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -48,215 +51,239 @@ export default function Form() {
   const reg =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const isOkay = ()=>{
+  const isOkay = () => {
     let res = true;
-    if (
-      firstname === "" || lastname === "" || email === "" || password === ""
-       || confirm === "" || mobile === "" || gender === ""
-    ) {
-      toast.error("fields can not be empty")
+    if (firstname === "") {
+      toast.error("firstname can not be empty");
+      res = false;
+    } else if (lastname === "") {
+      toast.error("lastname can not be empty");
+      res = false;
+    } else if (email === "") {
+      toast.error("email can not be empty");
+      res = false;
+    } else if (password === "") {
+      toast.error("password can not be empty");
+      res = false;
+    } else if (confirm === "") {
+      toast.error("confirm password can not be empty");
+      res = false;
+    } else if (mobile === "") {
+      toast.error("mobile field can not be empty");
+      res = false;
+    } else if (gender === "") {
+      toast.error("gender field can not be empty");
       res = false;
     } else if (!/^[a-zA-Z ]+$/.test(firstname)) {
-      toast.error("please give a valid first name")
+      toast.error("please give a valid first name");
       setFirstname("");
       res = false;
     } else if (!/^[a-zA-Z ]+$/.test(lastname)) {
       toast.error("please give a valid last name!");
       setLastname("");
       res = false;
-    } else if(password.length < 8){
-        toast.error("Password lenght should be more than 8 characters")
-        setPassword("");
-        res = false;
-    }else if(password !== confirm){
-        toast.error("password mismatch!");
-        setConfirm("");
-        res = false;
-    }else if(mob.test(mobile) === false){
-      toast.error("please enter a valid mobile number")
+    } else if (password.length < 8) {
+      toast.error("Password lenght should be more than 8 characters");
+      setPassword("");
+      res = false;
+    } else if (password !== confirm) {
+      toast.error("password mismatch!");
+      setConfirm("");
+      res = false;
+    } else if (mob.test(mobile) === false) {
+      toast.error("please enter a valid mobile number");
       setMobile("");
       res = false;
-    }
-    else if (!reg.test(String(email).toLowerCase())) {
+    } else if (!reg.test(String(email).toLowerCase())) {
       toast.error("please give a valid email id");
       setEmail("");
       res = false;
     }
     return res;
-  }
+  };
 
-  const onHandleSubmit = (e)=>{
-      e.preventDefault()
-      if(isOkay()){
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    if (isOkay()) {
+      let userOb = {
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        mobile: mobile,
+        gender: gender,
+        password: password,
+        confirm_password: confirm,
+      };
+      console.log("USER", userOb);
 
-        let userOb = {
-          firstName : firstname,
-          lastName : lastname,
-          email : email,
-          mobile : mobile,
-          gender : gender,
-          password : password,
-          confirm_password : confirm
-        }
-        console.log("USER", userOb);
+      var config = {
+        method: "post",
+        url: "https://neostore-api.herokuapp.com/api/auth/register",
+        data: userOb,
+      };
 
-        var config = {
-          method: 'post',
-          url: 'https://neostore-api.herokuapp.com/api/auth/register',
-          data : userOb
-        };
-
-        axios(config)
-        .then(res =>{
+      axios(config)
+        .then((res) => {
           setLoading(false);
-          console.log("SUCCESS", res);
-          if(res.status === 200){
+          if (res.status === 200) {
             alert("Sign up successfull");
             history.push("/login");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setLoading(false);
-          console.log("ERROR", err);
-          alert("error in sign up")
-        })
-      }
-  }
-  
-  
+          alert("error in sign up");
+        });
+    }
+  };
 
   return (
     <Container className="form-con">
-    <ToastContainer position="top-right" />
+      <ToastContainer position="top-right" />
 
-        <Row className="fbg">
-            <Col >
-              <FacebookLog />
-            </Col>
-            <Col >
-             <GoogleLog/>
-            </Col>
-        </Row>
-        <Row>
+      <Row className="fbg">
+        <Col>
+          <FacebookLog />
+        </Col>
+        <Col>
+          <GoogleLog />
+        </Col>
+      </Row>
+      <Row>
         <div>
-      
-      <h2 className="text-center mt-4 display-5">Enter New Developer</h2>
-      {
-        loading ? <div class="d-flex justify-content-center">
-        <div class="spinner-border text-danger" style={{width:"2.2em", height:"2.2em"}} role="status">
-        </div>
-        <span style={{backgroundColor : "transparent", fontSize:"20px"}}>Loading.....</span>
-      </div>: ""
-      }
-      <form className="text-center form">
-        <p>
-          <label id="name" for="firstname">
-            First Name*
-          </label>
-          <input
-            onChange={onfirstnameChange}
-            className=" empName"
-            type="text"
-            id="firstname"
-            name="devName"
-            placeholder="First Name"
-            value={firstname}
-          />
-        </p>
-        <p>
-          <label id="name" for="lastname">
-            Last Name*
-          </label>
-          <input
-            onChange={onlastnameChange}
-            className="empName"
-            type="text"
-            id="lastname"
-            name="devName"
-            placeholder="Last Name"
-            value={lastname}
-          />
-        </p>
-        <p>
-          <label id="email" for="empMail">
-            Email*
-          </label>
-          <input
-            onChange={onEmailChange}
-            className=" empName"
-            type="email"
-            id="empEmail"
-            name="devEmail"
-            placeholder="Email"
-            value={email}
-          />
-        </p>
-        <p>
-          <label id="name" for="password">
-            Password*
-          </label>
-          <input
-            onChange={onpasswordChange}
-            className=" empName"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="password"
-            value={password}
-          />
-        </p>
-        <p>
-          <label id="name" for="confirm">
-            Confirm Password*
-          </label>
-          <input
-            onChange={onconfirmChange}
-            className=" empName"
-            type="password"
-            id="confirm"
-            name="confirm"
-            placeholder="confirm password"
-            value={confirm}
-          />
-         
-        </p>
-        <p>
-          <label id="name" for="mobile">
-            Mobile No*
-          </label>
-          <input
-            onChange={onmobileChange}
-           className=" empName"
-            type = "tel"
-            maxLength = "10"
-            id="mobile"
-            name="mobile"
-            placeholder="Mobile No."
-            value={mobile}
-          />
-        </p>
-        <p onChange = {ongenderChange}>
-        <input type="radio" id="male" name="gender" value="male"/>
-        <label for="male" className="m-2">Male</label>
-        <input type="radio" id="female" name="gender" value="female"/>
-        <label for="female" className="m-2">Female</label><br />
-        </p>
+          <h2 className="text-center mt-4 display-5">Enter New Developer</h2>
+          {loading ? (
+            <div class="d-flex justify-content-center">
+              <div
+                class="spinner-border text-danger"
+                style={{ width: "2.2em", height: "2.2em" }}
+                role="status"
+              ></div>
+              <span
+                style={{ backgroundColor: "transparent", fontSize: "20px" }}
+              >
+                Loading.....
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
+          <form className="text-center form">
+            <p>
+              <label id="name" for="firstname">
+                First Name*
+              </label>
+              <input
+                onChange={onfirstnameChange}
+                className=" empName"
+                type="text"
+                id="firstname"
+                name="devName"
+                placeholder="First Name"
+                value={firstname}
+              />
+            </p>
+            <p>
+              <label id="name" for="lastname">
+                Last Name*
+              </label>
+              <input
+                onChange={onlastnameChange}
+                className="empName"
+                type="text"
+                id="lastname"
+                name="devName"
+                placeholder="Last Name"
+                value={lastname}
+              />
+            </p>
+            <p>
+              <label id="email" for="empMail">
+                Email*
+              </label>
+              <input
+                onChange={onEmailChange}
+                className=" empName"
+                type="email"
+                id="empEmail"
+                name="devEmail"
+                placeholder="Email"
+                value={email}
+              />
+            </p>
+            <p>
+              <label id="name" for="password" style={{ marginLeft: "-51%" }}>
+                Password*
+              </label>
+              <input
+                onChange={onpasswordChange}
+                className=" empName"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="password"
+                value={password}
+              />
+            </p>
+            <p>
+              <label id="name" for="confirm" style={{ marginLeft: "-45%" }}>
+                Confirm Password*
+              </label>
+              <input
+                onChange={onconfirmChange}
+                className=" empName"
+                type="password"
+                id="confirm"
+                name="confirm"
+                placeholder="confirm password"
+                value={confirm}
+              />
+            </p>
+            <p>
+              <label id="name" for="mobile" style={{ marginLeft: "-51%" }}>
+                Mobile No*
+              </label>
+              <input
+                onChange={onmobileChange}
+                className=" empName"
+                type="tel"
+                maxLength="10"
+                id="mobile"
+                name="mobile"
+                placeholder="Mobile No."
+                value={mobile}
+              />
+            </p>
+            <p onChange={ongenderChange}>
+              <input type="radio" id="male" name="gender" value="male" />
+              <label for="male" className="m-2 text-white">
+                Male
+              </label>
+              <input type="radio" id="female" name="gender" value="female" />
+              <label for="female" className="m-2 text-white">
+                Female
+              </label>
+              <br />
+            </p>
 
-        <button
-          onClick={onHandleSubmit}
-          type="submit"
-          className="btn btn-primary sub"
-        >
-          Submit
-        </button>
-        <p className="text-white">Already registered?
-        <NavLink to="/login" exact style={{textDecoration : "none"}}>
-              <span className="m-2 p-1 display-8 text-white bg-dark">sign in here</span>
-        </NavLink>
-        </p>
-      </form>
-    </div>
-        </Row>
-        </Container>
-  )
+            <button
+              onClick={onHandleSubmit}
+              type="submit"
+              className="btn btn-primary sub"
+            >
+              Submit
+            </button>
+            <p className="text-white">
+              Already registered?
+              <NavLink to="/login" exact style={{ textDecoration: "none" }}>
+                <span className="m-2 p-1 display-8 text-white bg-dark">
+                  sign in here
+                </span>
+              </NavLink>
+            </p>
+          </form>
+        </div>
+      </Row>
+    </Container>
+  );
 }

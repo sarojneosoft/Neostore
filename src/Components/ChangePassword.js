@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Checkout_Side from "./Checkout_Side";
@@ -8,6 +6,13 @@ import { Container, Row, Col } from "reactstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { CHANGE_AUTH, FLUSH_OUT } from "../context/action.type";
 import { AuthContext, CartContext } from "../context/DetailContext";
+
+
+/**
+ * @author Saroj Sundara
+ * @description this method is reponsible for changing password 
+ * @returns JSX for Change password screen
+ */
 
 export default function ChangePassword() {
   const history = useHistory();
@@ -70,7 +75,6 @@ export default function ChangePassword() {
       axios(config)
         .then((res) => {
           setLoading(false);
-          console.log("SUCCESS", res);
           if (res.status === 200) {
             toast.info("Password changed successfully");
             alert("logging out");
@@ -89,14 +93,12 @@ export default function ChangePassword() {
             cartDispatch({
               type: FLUSH_OUT,
             });
-            
 
             return history.replace("/login");
           }
         })
         .catch((err) => {
           setLoading(false);
-          console.log("ERROR", err);
           toast.error("unable to change password!");
         });
     }

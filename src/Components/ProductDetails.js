@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Container, Row, Col, Button, Toast } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import { FaRupeeSign, FaShareAlt } from "react-icons/fa";
 import {
@@ -7,20 +7,14 @@ import {
   FacebookIcon,
   TwitterIcon,
   WhatsappIcon,
-  PinterestIcon,
   LinkedinIcon,
   TwitterShareButton,
-  PinterestShareButton,
   WhatsappShareButton,
   LinkedinShareButton,
 } from "react-share";
 import { useHistory } from "react-router-dom";
 import { DetailContext, CartContext } from "../context/DetailContext";
-import {
-  ADD_DETAILS,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-} from "../context/action.type";
+import { ADD_TO_CART } from "../context/action.type";
 import { isAuthenticated } from "./Auth";
 
 import axios from "axios";
@@ -95,14 +89,20 @@ const useStyles1 = makeStyles({
   },
 });
 
+
+/**
+ * @author Saroj Sundara
+ * @description this method is responsible for showing the details of a product, it receives data from detail context 
+ * @returns JSX for Product Detail Screen
+ */
+
 export default function ProductDetails(props) {
   const [loading, setLoading] = useState(false);
   const { details, dispatch } = useContext(DetailContext);
   const [value1, setValue1] = React.useState(0);
   const [hover, setHover] = React.useState(0);
-  const classes1 = useStyles();
+  const classes1 = useStyles1();
   let history = useHistory();
-  console.log("DET", details);
   let image = details.cardImage;
   let subImage1 = details.subImage1;
   let subImage2 = details.subImage2;
@@ -113,10 +113,8 @@ export default function ProductDetails(props) {
   let description = details.description;
   let features = details.features;
   let id = details.id;
-  // let clr = `bg-${color} text-${color}`
   let prodUrl = `Hey checkout this cool ${name} at neostore at only Rs. ${price}
   image link : ${image}`;
-  let fburl = "https://neosoft.com";
 
   const [star, setStar] = useState(0);
   const [clicked, setClicked] = useState(false);
@@ -195,7 +193,6 @@ export default function ProductDetails(props) {
       })
       .catch((err) => {
         setLoading(false);
-        console.log("ERROR", err);
         toast.info("already added to the cart!");
       });
   };
@@ -245,21 +242,27 @@ export default function ProductDetails(props) {
                   </h3>
                   <FacebookShareButton
                     url={image}
-                    hashtag = {"#NeoSTORE"}
+                    hashtag={"#NeoSTORE"}
                     quote={`Hey checkout this cool ${name} at neostore at only ${price} Rs.`}
                     className="m-2"
                   >
                     <FacebookIcon size={42} round={true} />
                   </FacebookShareButton>
-                  <TwitterShareButton 
-                  url={prodUrl} 
-                  hashtags = {["NeoSTORE", "New" , "Product"]} className="m-2">
+                  <TwitterShareButton
+                    url={prodUrl}
+                    hashtags={["NeoSTORE", "New", "Product"]}
+                    className="m-2"
+                  >
                     <TwitterIcon size={42} round={true} />
                   </TwitterShareButton>
                   <WhatsappShareButton url={prodUrl} className="m-2">
                     <WhatsappIcon size={42} round={true} />
                   </WhatsappShareButton>
-                  <LinkedinShareButton url={image} summary = {prodUrl} className="m-2">
+                  <LinkedinShareButton
+                    url={image}
+                    summary={prodUrl}
+                    className="m-2"
+                  >
                     <LinkedinIcon size={42} round={true} />
                   </LinkedinShareButton>
                   <br />
@@ -280,17 +283,6 @@ export default function ProductDetails(props) {
                     rate product
                   </Button>
                   {clicked ? (
-                    //               <Box component="fieldset" mb={3} borderColor="transparent">
-                    //   <Rating
-                    //     name="simple-controlled"
-                    //     value = {star}
-                    //     onChange={(event, newValue) => {
-                    //        alert("rated successfully")
-                    //       setStar(newValue);
-                    //       setClicked(false)
-                    //     }}
-                    //   />
-                    // </Box>
                     <div className={classes1.root}>
                       <Rating
                         className="mt-2"
