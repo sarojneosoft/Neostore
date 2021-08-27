@@ -12,6 +12,7 @@ export default function Address() {
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [del, setDel] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   /**
  * @author Saroj Sundara
@@ -29,6 +30,7 @@ export default function Address() {
  */
 
   const loadAllAddress = async () => {
+    setEdit(false);
     setLoading(true);
     let token = localStorage.getItem("token");
     var config = {
@@ -49,7 +51,7 @@ export default function Address() {
 
   useEffect(() => {
     loadAllAddress();
-  }, [del]);
+  }, [del, edit===true]);
 
   return (
     <div>
@@ -84,7 +86,7 @@ export default function Address() {
             {addresses.map((address, index) => (
               <Row md={4} key={index} className="mt-2">
                 <Col md={12}>
-                  <AddressCard data={address} method={setDel} state={del} />
+                  <AddressCard data={address} method={setDel} editMethod ={setEdit} state={del} />
                 </Col>
               </Row>
             ))}

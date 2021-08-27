@@ -105,6 +105,8 @@ export default function EditAddress(props) {
         const callback = await axios(config);
         toast.success("address updated");
         props.editFun(false);
+        props.editAlert(true);
+        
       } catch (error) {
         toast.error("unable to update address");
       }

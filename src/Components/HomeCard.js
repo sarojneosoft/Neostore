@@ -48,7 +48,6 @@ export default function HomeCard(props) {
   let features = props.data.features;
   let id = props.data._id;
 
-  console.log(props.data.avgRating);
 
   const sendToProductDetails = () => {
     const details = {
@@ -91,7 +90,6 @@ export default function HomeCard(props) {
     axios(config)
       .then((res) => {
         setLoading(false);
-        console.log("SUCCESS", res);
         if (res.status === 200) {
           toast.info("added to cart successfully");
 
@@ -121,7 +119,7 @@ export default function HomeCard(props) {
           width="100%"
           src={cardImage}
           alt="product image"
-          style={{ height: "60vh" }}
+          style={{ height: "40vh" }}
         />
         {loading ? (
           <div class="d-flex justify-content-center">
@@ -139,14 +137,14 @@ export default function HomeCard(props) {
         )}
         <CardBody>
           <CardTitle
-            style={{ height: "10vh" }}
+            style={{ height: "5vh" }}
             tag="h5"
             onClick={sendToProductDetails}
           >
             {cardTitle}
           </CardTitle>
           <CardText>Rs. {cardPrice} /-</CardText>
-          <Button color="danger" className="mb-4" onClick={addProductToCart}>
+          <Button color="danger" className="mb-3" onClick={addProductToCart}>
             Add To Cart
           </Button>
           <Box component="fieldset" mb={3} borderColor="transparent">

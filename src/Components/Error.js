@@ -12,7 +12,7 @@ export default function Error() {
     <div>
       <img
         src={error}
-        alt=""
+        alt="error image"
         style={{ display: "block", margin: "5% auto", width: "70%" }}
       />
     </div>

@@ -38,6 +38,13 @@ export default function Order() {
         }
       );
       let tempArr = result.data.data.orders;
+      tempArr = tempArr.map((orderAr)=> {
+        orderAr.items = orderAr.items.filter((eachItem) => eachItem.productId !== null)
+      return orderAr;
+      });
+      console.log("TEMP", tempArr);
+      tempArr = tempArr.filter((orderAr)=> (orderAr.items.length !== 0));
+      console.log("TEMP", tempArr);
       tempArr.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
       setOrders(tempArr);
     } catch (error) {
@@ -140,6 +147,7 @@ export default function Order() {
             )}
 
             {orders.map((order, index) => {
+             
               return (
                 <Row
                   key={index}

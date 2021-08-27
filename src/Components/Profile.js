@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile";
  * @returns JSX for Profile Screen
  */
 
-export default function Profile() {
+export default function Profile(props) {
   let fname = localStorage.getItem("fname");
   let lname = localStorage.getItem("lname");
   let gender = localStorage.getItem("gender");
@@ -38,7 +38,7 @@ export default function Profile() {
           <Col md={5}>
             {isEdit ? (
               <>
-                <EditProfile editFun={setIsEdit} />
+                <EditProfile editFun={setIsEdit} editAlert = {props.editMethod}/>
                 <Button
                   color="warning"
                   style={{ fontSize: "20px", width: "100%", marginLeft: "10%" }}

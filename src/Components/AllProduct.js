@@ -41,6 +41,10 @@ export default function AllProduct(props) {
   const [isAll, setIsAll] = useState(true);
   const [pagesPag, setPages] = useState(0);
 
+  const [dropCat, setDropCat] = useState("")
+  const [dropCol, setDropCol] = useState("")
+  const [dropSort, setDropSort] = useState("")
+
   const loadAllTheProducts = () => {
     setLoadcolor("");
     setLoadcategory("");
@@ -53,23 +57,47 @@ export default function AllProduct(props) {
   };
 
   const onCategoryChange = async (e) => {
+    setLoadcolor("");
+    setLoadsort("");
+    setLoadOrder("");
     searchDispatch({
       type: SEARCH_PRO,
       payload: "",
     });
     let category = e.target.value;
-    if (category === "table") setLoadcategory("6065c425f45ada6429eb42c9");
-    else if (category === "sofa") setLoadcategory("6065c3a524fe1963df4f2d16");
-    else if (category === "bed") setLoadcategory("6065c425f45ada6429eb42c7");
-    else if (category === "cupboard")
+    if (category === "table") {
+      setLoadcategory("6065c425f45ada6429eb42c9");
+      setDropCat("table")
+    }
+    else if (category === "sofa"){ 
+      setLoadcategory("6065c3a524fe1963df4f2d16");
+      setDropCat("sofa")
+      
+    }
+    else if (category === "bed") {
       setLoadcategory("6065c425f45ada6429eb42c7");
+      setDropCat("bed");
+    }
+    else if (category === "cupboard"){
+      setLoadcategory("6065c425f45ada6429eb42c7");
+      setDropCat("cupboard")
+    }
     else if (category == "remove") setLoadcategory("");
   };
   const onColorChange = (e) => {
     let color = e.target.value;
-    if (color === "red") setLoadcolor("6065ca16cec0196a6fe56e3a");
-    else if (color === "yellow") setLoadcolor("6065ca24cec0196a6fe56e3d");
-    else if (color === "blue") setLoadcolor("6065ca1bcec0196a6fe56e3b");
+    if (color === "red") {
+      setLoadcolor("6065ca16cec0196a6fe56e3a");
+      setDropCol("red")
+    }
+    else if (color === "yellow") {
+      setLoadcolor("6065ca24cec0196a6fe56e3d");
+      setDropCol("yellow")
+    }
+    else if (color === "blue") {
+      setLoadcolor("6065ca1bcec0196a6fe56e3b");
+      setDropCol("blue")
+    }
     else if (color === "remove") setLoadcolor("");
   };
   const onSortChange = (e) => {
@@ -77,15 +105,19 @@ export default function AllProduct(props) {
     if (sortVal === "ratings low") {
       setLoadsort("rating");
       setLoadOrder("asc");
+      setDropSort("ratings low")
     } else if (sortVal === "ratings high") {
       setLoadsort("rating");
       setLoadOrder("desc");
+      setDropSort("ratings high")
     } else if (sortVal === "price low") {
       setLoadsort("price");
       setLoadOrder("asc");
+      setDropSort("price low")
     } else if (sortVal === "price high") {
       setLoadsort("price");
       setLoadOrder("desc");
+      setDropSort("price high")
     } else if (sortVal === "remove") {
       setLoadsort("");
       setLoadOrder("");
@@ -113,7 +145,6 @@ export default function AllProduct(props) {
       if (loadOrder !== "") {
         url = url + `&orderby=${loadOrder}`;
       }
-      console.log(url);
       const res = await axios.get(url, {
         headers: {
           "Content-Type": "application/json",
@@ -148,11 +179,12 @@ export default function AllProduct(props) {
 
       <Container>
         <Row>
+          <Col md={12}>
           <Row
             className="border border-dark rounded mt-2 bg-warning"
             style={{ position: "sticky", top: "12%", zIndex: "1" }}
           >
-            <Col md={12}>
+            <Col md={12} >
               <Button
                 color="dark"
                 className="mt-4 btn btn-lg"
@@ -175,7 +207,7 @@ export default function AllProduct(props) {
                 size="lg"
               >
                 <DropdownToggle caret color="dark">
-                  {loadcategory === "" ? "category off" : "category on"}
+                  {loadcategory === "" ? "category off" : `${dropCat}`}
                 </DropdownToggle>
                 <DropdownMenu
                   onClick={onCategoryChange}
@@ -204,7 +236,7 @@ export default function AllProduct(props) {
                 size="lg"
               >
                 <DropdownToggle caret color="dark">
-                  {loadcolor === "" ? "colors off" : "colors on"}
+                  {loadcolor === "" ? "colors off" : `${dropCol}`}
                 </DropdownToggle>
                 <DropdownMenu
                   onClick={onColorChange}
@@ -233,7 +265,7 @@ export default function AllProduct(props) {
                 size="lg"
               >
                 <DropdownToggle caret color="dark">
-                  {loadsort === "" ? "sort off" : "sort on"}
+                  {loadsort === "" ? "sort off" : `${dropSort}`}
                 </DropdownToggle>
                 <DropdownMenu
                   onClick={onSortChange}
@@ -258,7 +290,7 @@ export default function AllProduct(props) {
             </Col>
           </Row>
           <Row>
-            <Col md={12}>
+            <Col md={12} >
               <Row className="mt-4">
                 {allproducts.map((prod, index) => (
                   <Col md={4} key={index}>
@@ -287,11 +319,12 @@ export default function AllProduct(props) {
                   <br />{" "}
                   <img
                     src="https://thumbs.dreamstime.com/b/house-not-available-white-background-sign-label-flat-style-201430826.jpg"
-                    width="50%"
+                    width="30%"
                   />
                 </div>
               ) : (
                 <Pagination
+                
                   size="large"
                   count={pagesPag}
                   color="primary"
@@ -303,7 +336,7 @@ export default function AllProduct(props) {
                   }}
                   className="mt-4"
                   style={{
-                    marginLeft: "33%",
+                    marginLeft: "35%",
                     marginRight: "35%",
                     width: "100%",
                   }}
@@ -311,6 +344,7 @@ export default function AllProduct(props) {
               )}
             </Col>
           </Row>
+          </Col>
         </Row>
       </Container>
     </div>

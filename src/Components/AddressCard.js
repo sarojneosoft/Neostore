@@ -57,12 +57,13 @@ export default function AddressCard(props) {
     setIsEdit(false);
   };
 
+ 
   return (
     <div>
       <ToastContainer position="top-center" />
       {isEdit ? (
         <>
-          <EditAddress data={addressOb} editFun={setIsEdit} />
+          <EditAddress data={addressOb} editFun={setIsEdit} editAlert = {props.editMethod}/>
           <Button
             color="warning"
             style={{ fontSize: "20px", width: "100%", marginLeft: "10%" }}
