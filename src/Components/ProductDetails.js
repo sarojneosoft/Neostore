@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 
 import { FaRupeeSign, FaShareAlt } from "react-icons/fa";
@@ -122,6 +122,12 @@ export default function ProductDetails(props) {
   const [isZoom, setIsZoom] = useState(false);
   const { cartDispatch } = useContext(CartContext);
 
+  const isDetailsNull = ()=>{
+    if(details.length === 0){
+      history.goBack();
+    }
+  }
+
   const manageClick = () => {
     if (clicked === false) setClicked(true);
   };
@@ -196,6 +202,10 @@ export default function ProductDetails(props) {
         toast.info("already added to the cart!");
       });
   };
+
+  useEffect(()=>{
+    isDetailsNull();
+  },[])
 
   return (
     <div>

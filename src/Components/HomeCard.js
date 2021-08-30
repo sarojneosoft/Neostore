@@ -137,7 +137,7 @@ export default function HomeCard(props) {
         )}
         <CardBody>
           <CardTitle
-            style={{ height: "5vh" }}
+            style={{ height: "6vh" }}
             tag="h5"
             onClick={sendToProductDetails}
           >

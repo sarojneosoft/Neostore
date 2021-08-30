@@ -18,6 +18,9 @@ import { SearchContext } from "../context/DetailContext";
 import { isAuthenticated } from "./Auth";
 import { toast } from "react-toastify";
 import Autosuggest from "react-autosuggest";
+import {
+  ADD_DETAILS,
+} from "../context/action.type";
 
 /**
  * @author Saroj Sundara
@@ -40,6 +43,8 @@ export default function Navbar(props) {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [suggestPros, setSuggestPros] = useState([]);
+  const [isClikced, setIsClikced] = useState(false);
+
 
   useEffect(() => {
     if (isAuthenticated()) {
@@ -94,7 +99,6 @@ export default function Navbar(props) {
   };
 
   const getSuggestions = (value) => {
-    console.log("VVV", value);
     const inputValue = value.trim().toLowerCase();
     setSearchProd(value);
     const inputLength = inputValue.length;
@@ -142,6 +146,42 @@ export default function Navbar(props) {
     placeholder: "Type a product name....",
     value,
     onChange: onChange,
+  };
+
+  const sendToProductDetails = (suggestion) => {
+  let cardImage = suggestion.mainImage;
+
+    if (!cardImage)
+    cardImage =
+      "https://media.architecturaldigest.com/photos/5f4e9c54072307c75638c0f1/1:1/w_1280%2Cc_limit/Screen%252520Shot%2525202020-09-01%252520at%2525203.08.43%252520PM.png";
+  let cardTitle = suggestion.name;
+  let cardPrice = suggestion.price;
+  let cardRating = suggestion.avgRating;
+  let subImage1 = suggestion.subImages[0];
+  let subImage2 = suggestion.subImages[1];
+  let color = suggestion.color.name;
+  let description = suggestion.description;
+  let features = suggestion.features;
+  let id = suggestion._id;
+
+    const details = {
+      cardImage,
+      cardTitle,
+      cardPrice,
+      cardRating,
+      subImage1,
+      subImage2,
+      color,
+      description,
+      features,
+      id,
+    };
+    dispatch({
+      type: ADD_DETAILS,
+      payload: details,
+    });
+    setIsClikced(true);
+    history.push("/productdetails");
   };
 
   return (
@@ -193,11 +233,12 @@ export default function Navbar(props) {
                   )}
                   onSuggestionSelected={(event, { suggestion, method }) => {
                     setSearchProd(suggestion.name);
-                    searchDispatch({
-                      type: SEARCH_PRO,
-                      payload: suggestion.name.trim(),
-                    });
-                    history.push("allproducts");
+                    sendToProductDetails(suggestion)
+                    // searchDispatch({
+                    //   type: SEARCH_PRO,
+                    //   payload: suggestion.name.trim(),
+                    // });
+                    // history.push("/allproducts");
                   }}
                 />
               </div>
@@ -212,7 +253,7 @@ export default function Navbar(props) {
                       payload: searchProd.trim(),
                     });
 
-                    history.push("allproducts");
+                    history.push("/allproducts");
                   }
                 }}
                 className="mt-2 btn btn-danger rounded"
